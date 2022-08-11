@@ -1,0 +1,268 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat;
+    margin: 0;
+}
+
+
+nav {
+    background-color: #FAF0D7;
+    height: 5rem;
+    position: fixed;
+    width: 100%;
+    height: 10%;
+    top: -0.5rem;
+    z-index: 1;
+
+}
+
+.navTitle {
+    font-weight: bold;
+    color: inherit;
+    color: black;
+    text-decoration: none;
+    font-size: 30px;
+    text-align: center;
+    margin : 0 auto;
+    position: relative;
+    top: 0.7rem;
+
+}
+
+.masthead {
+    position: relative;
+    top: 5rem;
+}
+.container {
+    display: flex;
+    width: auto;
+    height: auto;
+    padding: 20px;
+    margin: 0 auto;
+}
+.container .box {
+    margin: 1em;
+    border-radius: 10px;
+    height: auto;
+}
+
+.masthead .container .desc {
+    flex-grow: 2;
+    width: 10%;
+}
+.masthead .container .card {
+    flex-grow: 1;
+    width:20%;
+    height: 650px;
+    border-bottom: 5px solid #F9F9F9;
+    overflow:scroll;
+}
+.masthead .container .desc p {
+    margin-left: 6rem;
+}
+
+.masthead .container .card-item {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+    width: 520px;
+    height: auto;
+    border-radius: 20px;
+    margin: 0 auto;
+    margin-top: 1rem;
+    padding: 20px;
+}
+.masthead .container .card p {
+    font-size: 12px;
+    font-weight: lighter;
+    text-align: justify;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    color: #6C7A89;
+    top: 2rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.masthead .container .form {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    height: 300px;
+    border-radius: 16px;
+}
+
+.masthead .container .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.masthead .container .form-group label {
+    margin-bottom: 4px;
+    margin-top: 30px;
+    font-size: 22px;
+    font-weight: lighter;
+}
+
+.masthead .container .form-group .input {
+    height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 2px solid #F9F9F9;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.masthead .container .isReading {
+    margin-top: 30px;
+    padding-bottom: 20px;
+}
+
+.masthead .container .btn-submit {
+    background-color: #FAF0D7;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.masthead .container .btn-reset {
+    background-color: white;
+    padding: 15px;
+    border: 2px solid #FAF0D7;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.masthead .container .btn-submit:hover,
+.masthead .container .btn-reset:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.form_search {
+    margin-top: 1rem;
+}
+
+.search {
+    height: 40px;
+    width : 260px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color : #F9F9F9;
+    border: none;
+}
+
+.btn-search {
+    background-color: #FAF0D7;
+    border: none;
+    border-radius: 10px;
+    width: 120px;
+    height: 40px;
+    position: relative;
+    bottom: 2px;
+}
+
+.btn-search:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-item .list-item {
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.card-item .list-item .data-title {
+    padding-bottom: 10px;
+}
+
+.card-item .list-item .data-author {
+    padding-bottom: 10px;
+}
+
+.card-item .list-item .data-year {
+    padding-bottom: 10px;
+}
+
+.inner {
+    border-bottom: 2px solid #F9F9F9;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.btn-check {
+    width: 25px;
+    height: 25px;
+
+    background: url('../icon/check-outline.svg');
+    background-size: contain;
+    margin-left: auto;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-check:hover {
+    background: url('../icon/check-solid.svg');
+    background-size: contain;
+}
+
+
+.btn-undo {
+    width: 20px;
+    height: 20px;
+    background: url('../icon/undo-ouline.svg');
+    background-size: contain;
+    margin-left: auto;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-undo:hover {
+    background: url('../icon/undo-solid.svg');
+    background-size: contain;
+}
+
+.btn-trash {
+    width: 20px;
+    height: 20px;
+
+    background: url('../icon/trash-outline.svg');
+    background-size: contain;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-trash:hover {
+    background: url('../icon/trash-fill.svg');
+    background-size: contain;
+}
+
+.btn-edit {
+    width: 20px;
+    height: 20px;
+
+    background: url('../icon/pen-solid.svg');
+    background-size: contain;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-edit:hover {
+    background: url('../icon/marker-solid.svg');
+    background-size: contain;
+}
+
+.confirmCustome {
+    background-color: #FAF0D7;
+}
+
+.kata2 {
+    display: none;
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Shelf Apps</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Metrophobic&display=swap" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <script src="assets/lib/sweetalert2.min.js"></script>
+    <link href="assets/lib/sweetalert2.css" rel="stylesheet">
+   
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navTitle">
+                <a href="#" class="navTitle">Bookshelf Apps</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="masthead">
+            <div class="container">
+                <div class="box desc" id="inputBook">
+                    <h2 align="center">Enter New Data</h2>
+                   <form class="form" id="form">
+                        <div class="form-group form-title">
+                            <label for="title">Title</label>
+                            <input class="input" type="text" name="title" id="title" placeholder="Title Book" required>
+                        </div>
+                        <div class="form-group form-title">
+                            <label for="author">Author</label>
+                            <input class="input" type="text" name="author" id="author" placeholder="Author Book" required>
+                        </div>
+                        <div class="form-group form-title">
+                            <label for="year">Year</label>
+                            <input class="input" type="number" name="year" id="year" placeholder="Year" required>
+                        </div>
+                        <div class="isReading">
+                            <label for="isRead">finished reading</label>
+                            <input type="checkbox" id="isRead">
+                        </div>
+                        <input type="submit" value="Save" name="Submit" class="btn-submit">
+                        <input type="reset" value="Reset" class="btn-reset">
+                   </form>
+                </div>
+                <div class="box desc" id="editBook" hidden>
+                    <h2 align="center">Edit Data</h2>
+                   <form class="form" id="formEdit">
+                        <div class="form-group form-title">
+                            <label for="title">Title</label>
+                            <input class="input" type="text" name="title" id="edit-title" placeholder="Title Book" required>
+                        </div>
+                        <div class="form-group form-title">
+                            <label for="author">Author</label>
+                            <input class="input" type="text" name="author" id="edit-author" placeholder="Author Book" required>
+                        </div>
+                        <div class="form-group form-title">
+                            <label for="year">Year</label>
+                            <input class="input" type="number" name="year" id="edit-year" placeholder="Year" required>
+                        </div>
+                        <div class="isReading">
+                            <label for="isRead">finished reading</label>
+                            <input type="checkbox" id="editIsRead">
+                        </div>
+                        <input type="submit" value="Update" name="Submit" class="btn-submit">
+                   </form>
+                </div>
+                <div class="box card">
+                    <div class="card-item">
+                        <section class="search_section">
+                            <h2>Search Book</h2>
+                            <form id="searchBook" class="form_search">
+                              <label for="searchBookTitle">Title Book</label>
+                              <input id="searchBookTitle" type="text" class="search" placeholder="Search Title Book">
+                              <button id="searchSubmit" type="submit" class="btn-search">Search</button>
+                            </form>
+                        </section>
+                    </div>
+                    <div class="card-item">
+                        <h2>Not Finished Reading</h2>
+                        <div class="list-item" id="bookShelfPartUncomplate"></div>
+                    </div>
+                    <div class="card-item">
+                        <h2>Finished Reading</h2>
+                        <div class="list-item" id="bookShelfPartComplate"></div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    </main>
+    <footer>
+
+    </footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>
