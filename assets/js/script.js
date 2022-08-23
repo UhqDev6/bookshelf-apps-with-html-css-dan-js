@@ -159,38 +159,7 @@ const makeElementBook = (bookObject) => {
         elementContainer.append(actionUndo(), actionTrash());
 
     } else {
-
-        // editBtn.classList.add('btn-edit');
-
-        // const saveBook = document.getElementById('save');
-        // const editBook = document.getElementById('edit');
-
-        // editBtn.addEventListener('click', () => {
-        //     saveBook.setAttribute('hidden', true);
-        //     editBook.removeAttribute('hidden');
-
-        //     const bookId = bookObject.id;
-        //     const bookItem = findBook(bookId);
         
-        //     const editTitle = document.getElementById('edit-title');
-        //     editTitle.value = bookItem.title;
-        
-        //     const editAuthor = document.getElementById('edit-author');
-        //     editAuthor.value = bookItem.author;
-        
-        //     const editYear = document.getElementById('edit-year');
-        //     editYear.value = bookItem.year;
-        
-        //     const editisComplete = document.getElementById('editisComplete');
-        //     editisComplete.checked = bookItem.isComplete;
-        //     const submitFormEdit = document.getElementById('formEdit');
-        //     submitFormEdit.addEventListener('submit', (event) => {
-        //         event.preventDefault();
-        //         updateBook(bookId);
-        //         window.location.reload(true);
-        //     });
-
-        // });
         actionCheck();
 
         actionEdit();
