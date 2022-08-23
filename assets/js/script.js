@@ -348,7 +348,6 @@ const filterData = (titleBook) => {
                         <h4 class="data-author">${`Author`} : ${bookShelf.author}</h4>
                         <h4 class="data-year">${`Year`} : ${bookShelf.year}</h4>
                         <button onClick="undoBookToComplate(${bookShelf.id})" class="btn-check"></button>
-                        <button onClick="editBookShelf(${bookShelf})" class="btn-edit"></button>
                         <button onClick="removeBookToShelf(${bookShelf.id})"  class="btn-trash"></button>
                     </div>`
                 );
