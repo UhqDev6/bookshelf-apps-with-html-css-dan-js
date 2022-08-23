@@ -1,10 +1,11 @@
-const bookShelfPartUncomplate = [];
+let bookShelfPartUncomplate = [];
+let bookShelfPartFilter = [];
 const RENDER_EVENT = 'render_book';
 const SAVED_EVENT = 'saved-book';
 const STORAGE_KEY = 'bookshelf_apps';
 
-document.addEventListener('DOMContentLoaded', (bookId) => {
-    const submitForm = document.getElementById('form');
+document.addEventListener('DOMContentLoaded', () => {
+    const submitForm = document.getElementById('formSave');
     const submitFilter = document.getElementById('searchBook');
 
     submitForm.addEventListener('submit', (event)=> {
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', (bookId) => {
     });
     submitFilter.addEventListener('submit', (event) => {
         event.preventDefault();
-        filterData();
+        filterData(document.getElementById('searchBookTitle').value);
     });
 
     if(isStorageExist()){
@@ -24,8 +25,6 @@ document.addEventListener('DOMContentLoaded', (bookId) => {
 });
 
 document.addEventListener(RENDER_EVENT, ()=> {
-    console.log(bookShelfPartUncomplate);
-
     const partUncomplate = document.getElementById('bookShelfPartUncomplate');
     partUncomplate.innerHTML = '';
 
@@ -34,7 +33,7 @@ document.addEventListener(RENDER_EVENT, ()=> {
 
     for(let bookItem of bookShelfPartUncomplate) {
         let bookElement = makeElementBook(bookItem);
-        if(!bookItem.isRead){
+        if(!bookItem.isComplete){
             partUncomplate.append(bookElement);
         }else{
             partComplate.append(bookElement);
@@ -42,15 +41,14 @@ document.addEventListener(RENDER_EVENT, ()=> {
     }
 });
 
-
 const addBook = () => {
     const titleBook = document.getElementById('title').value;
     const authorBook  = document.getElementById('author').value;
     const yearBook = document.getElementById('year').value;
-    const isReadBook = document.getElementById('isRead').checked;
+    const isCompleteBook = document.getElementById('isComplete').checked;
 
     const generatedID = generateId();
-    const bookObject = generatedBookObject(generatedID, titleBook, authorBook, yearBook, isReadBook);
+    const bookObject = generatedBookObject(generatedID, titleBook, authorBook, yearBook, isCompleteBook);
 
     bookShelfPartUncomplate.push(bookObject);
 
@@ -59,19 +57,18 @@ const addBook = () => {
 }
 
 const updateBook = (bookId) => {
-    const bookTarget = findBook(Number(bookId));
+    const bookTarget = findBook(bookId);
     
-    if(bookTarget === null) return;
-
     const updateTitle = document.getElementById('edit-title').value;
     const updateAuthor = document.getElementById('edit-author').value;
     const updateYear = document.getElementById('edit-year').value;
-    const updateIsRead = document.getElementById('editIsRead').checked;
+    const updateisComplete = document.getElementById('editisComplete').checked;
+
     
     bookTarget.title = updateTitle;
     bookTarget.author = updateAuthor;
     bookTarget.year = updateYear;
-    bookTarget.isRead = updateIsRead;
+    bookTarget.isComplete = updateisComplete;
 
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveDataToLocalStorage();
@@ -81,13 +78,13 @@ const generateId = () => {
     return +new Date();
 }
 
-const generatedBookObject = (id, title, author, year, isRead) => {
+const generatedBookObject = (id, title, author, year, isComplete) => {
     return {
         id,
         title,
         author,
         year,
-        isRead
+        isComplete,
     }
 }
 
@@ -121,18 +118,17 @@ const makeElementBook = (bookObject) => {
         return trashBtn;
     }
 
-    if(bookObject.isRead) {
-        const undoBtn = document.createElement('button');
-        undoBtn.classList.add('btn-undo');
+    const actionEdit = () => {
+        const editBtn = document.createElement('button');
+        editBtn.classList.add('btn-edit');
 
-        undoBtn.addEventListener('click', () => {
-            undoBookToComplate(bookObject.id);
-        });
+            editBtn.addEventListener('click', () => {
+                editBookShelf(bookObject);
+            });
+        return editBtn;
+    }
 
-        actionTrash();
-
-        elementContainer.append(undoBtn, actionTrash());
-    }else {
+    const actionCheck = () => {
         const checkBtn = document.createElement('button');
         checkBtn.classList.add('btn-check');
 
@@ -140,52 +136,107 @@ const makeElementBook = (bookObject) => {
             addBookToComplated(bookObject.id);
         });
 
-        const editBtn = document.createElement('button');
-        editBtn.classList.add('btn-edit');
+        return checkBtn;
+    }
 
-        const formInputBook = document.getElementById('inputBook');
-        const formEditBook = document.getElementById('editBook');
-        editBtn.addEventListener('click', () => {
-            formInputBook.setAttribute('hidden', true);
-            formEditBook.removeAttribute('hidden');
-    
-            const bookId = bookObject.id;
-            const bookItem = findBook(Number(bookId));
+    const actionUndo = () => {
+        const undoBtn = document.createElement('button');
+        undoBtn.classList.add('btn-undo');
 
-            const editTitle = document.getElementById('edit-title');
-            editTitle.value = bookItem.title;
-
-            const editAuthor = document.getElementById('edit-author');
-            editAuthor.value = bookItem.author;
-
-            const editYear = document.getElementById('edit-year');
-            editYear.value = bookItem.year;
-
-            const editIsRead = document.getElementById('editIsRead');
-            editIsRead.checked = bookItem.isRead;
-            const submitFormEdit = document.getElementById('formEdit');
-            submitFormEdit.addEventListener('submit', (event) => {
-                event.preventDefault();
-                updateBook(bookId);
-                window.location.reload(true);
-            });
-
+        undoBtn.addEventListener('click', () => {
+            undoBookToComplate(bookObject.id);
         });
+
+        return undoBtn;
+    }
+
+    if(bookObject.isComplete) {
+
+        actionUndo();
+
+        actionTrash();
+
+        elementContainer.append(actionUndo(), actionTrash());
+
+    } else {
+
+        // editBtn.classList.add('btn-edit');
+
+        // const saveBook = document.getElementById('save');
+        // const editBook = document.getElementById('edit');
+
+        // editBtn.addEventListener('click', () => {
+        //     saveBook.setAttribute('hidden', true);
+        //     editBook.removeAttribute('hidden');
+
+        //     const bookId = bookObject.id;
+        //     const bookItem = findBook(bookId);
+        
+        //     const editTitle = document.getElementById('edit-title');
+        //     editTitle.value = bookItem.title;
+        
+        //     const editAuthor = document.getElementById('edit-author');
+        //     editAuthor.value = bookItem.author;
+        
+        //     const editYear = document.getElementById('edit-year');
+        //     editYear.value = bookItem.year;
+        
+        //     const editisComplete = document.getElementById('editisComplete');
+        //     editisComplete.checked = bookItem.isComplete;
+        //     const submitFormEdit = document.getElementById('formEdit');
+        //     submitFormEdit.addEventListener('submit', (event) => {
+        //         event.preventDefault();
+        //         updateBook(bookId);
+        //         window.location.reload(true);
+        //     });
+
+        // });
+        actionCheck();
+
+        actionEdit();
 
         actionTrash();
         
-        elementContainer.append(checkBtn, editBtn, actionTrash());
+        elementContainer.append(actionCheck(), actionEdit(), actionTrash());
     }
 
     return elementContainer;
 
 }
 
+const editBookShelf = (bookObject) => {
+    const saveBook = document.getElementById('save');
+    const editBook = document.getElementById('edit');
+    saveBook.setAttribute('hidden', true);
+    editBook.removeAttribute('hidden');
+
+    const bookId = bookObject.id;
+    const bookItem = findBook(bookId);
+
+    const editTitle = document.getElementById('edit-title');
+    editTitle.value = bookItem.title;
+
+    const editAuthor = document.getElementById('edit-author');
+    editAuthor.value = bookItem.author;
+
+    const editYear = document.getElementById('edit-year');
+    editYear.value = bookItem.year;
+
+    const editisComplete = document.getElementById('editisComplete');
+    editisComplete.checked = bookItem.isComplete;
+    const submitFormEdit = document.getElementById('formEdit');
+    submitFormEdit.addEventListener('submit', (event) => {
+        event.preventDefault();
+        updateBook(bookId);
+        window.location.reload(true);
+    });
+}
+
 const addBookToComplated = (bookId) => {
     const bookTarget = findBook(bookId);
     if(bookTarget === null) return;
 
-    bookTarget.isRead = true;
+    bookTarget.isComplete = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveDataToLocalStorage();
 }
@@ -194,7 +245,7 @@ const undoBookToComplate = (bookId) => {
     const bookTarget = findBook(bookId);
     if(bookTarget === null) return;
 
-    bookTarget.isRead = false;
+    bookTarget.isComplete = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveDataToLocalStorage();
 }
@@ -206,8 +257,8 @@ const removeBookToShelf = (bookId) => {
         text: "Delete item book in the shelf",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#FDCB9E',
+        cancelButtonColor: '#FF5F7E',
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -258,7 +309,6 @@ const isStorageExist = () => {
 const loadDataFromStorage = () => {
     const serializedData = localStorage.getItem(STORAGE_KEY);
     let dataBook = JSON.parse(serializedData);
-    console.log(dataBook);
     if(dataBook !== null) {
         for (const book of dataBook){
             bookShelfPartUncomplate.push(book);
@@ -267,21 +317,49 @@ const loadDataFromStorage = () => {
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
-const filterData = () => {
-    let titleBook = document.getElementById('searchBookTitle').value;
-    console.log(titleBook);
+const filterData = (titleBook) => {
+    document.getElementById('bookShelfPartUncomplate').innerHTML = '';
+    document.getElementById('bookShelfPartComplate').innerHTML = '';
+    bookShelfPartFilter = [...bookShelfPartUncomplate];
 
-    const findTitleBook = document.querySelectorAll('.inner > .data-title');
-    console.log(findTitleBook);
-
-    for(let dataItem of findTitleBook){
-        if(dataItem.innerText.toLowerCase().includes(titleBook)) {
-            dataItem.parentElement.style.display = 'block';
-        } else {
-            dataItem.parentElement.style.display = 'none';
+    if(titleBook === "" || titleBook === 'undefined') {
+        document.dispatchEvent(new Event(RENDER_EVENT));
+    } else {
+        for(let bookShelf of bookShelfPartFilter.filter((bookShelf) => {
+            return bookShelf.title === titleBook.toLowerCase();
+        })) {
+            if(bookShelf.isComplete === false) {
+                document.getElementById('bookShelfPartUncomplate').insertAdjacentHTML(
+                    'beforeend',
+                    `<div class="inner">
+                        <h4 class="data-title">${`Book Title`} : ${bookShelf.title}</h4>
+                        <h4 class="data-author">${`Author`} : ${bookShelf.author}</h4>
+                        <h4 class="data-year">${`Year`} : ${bookShelf.year}</h4>
+                        <button onClick="addBookToComplated(${bookShelf.id})" class="btn-check"></button>
+                        <button onClick="editBookShelf(${bookShelf})" class="btn-edit"></button>
+                        <button onClick="removeBookToShelf(${bookShelf.id})"  class="btn-trash"></button>
+                    </div>`
+                );
+            } else {
+                document.getElementById('bookShelfPartComplate').insertAdjacentHTML(
+                    'beforeend',
+                    `<div class="inner">
+                        <h4 class="data-title">${`Book Title`} : ${bookShelf.title}</h4>
+                        <h4 class="data-author">${`Author`} : ${bookShelf.author}</h4>
+                        <h4 class="data-year">${`Year`} : ${bookShelf.year}</h4>
+                        <button onClick="undoBookToComplate(${bookShelf.id})" class="btn-check"></button>
+                        <button onClick="editBookShelf(${bookShelf})" class="btn-edit"></button>
+                        <button onClick="removeBookToShelf(${bookShelf.id})"  class="btn-trash"></button>
+                    </div>`
+                );
+            }
         }
+
     }
 
 }
+
+
+
 
 
