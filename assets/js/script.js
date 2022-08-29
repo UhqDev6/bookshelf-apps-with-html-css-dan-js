@@ -295,7 +295,7 @@ const filterData = (titleBook) => {
         document.dispatchEvent(new Event(RENDER_EVENT));
     } else {
         for(let bookShelf of bookShelfPartFilter.filter((bookShelf) => {
-            return bookShelf.title === titleBook.toLowerCase();
+            return bookShelf.title.toLowerCase().includes(titleBook);
         })) {
             if(bookShelf.isComplete === false) {
                 document.getElementById('bookShelfPartUncomplate').insertAdjacentHTML(
